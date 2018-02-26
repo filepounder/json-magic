@@ -1,0 +1,29 @@
+{
+  "name": "json-magic",
+  "version": "0.0.1",
+  "description": "Utilities for manipulating JSON objects.",
+  "homepage": "https://github.com/cysonius/json-magic",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cysonius/json-magic.git"
+  },
+  "author": {
+    "name": "Martin Naude",
+    "email": "martin@filepounder.com"
+  },
+  "dependencies": {
+    "async": "2.6.0",
+    "check-types": "7.3.0",
+    "deepcopy": "0.6.3",
+    "deepmerge": "2.0.1",
+    "json-pointer": "0.6.0",
+    "underscore.string": "3.3.4"
+  },
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "5.0.1"
+  }
+}
