@@ -374,5 +374,39 @@ describe('JSON Magic', function() {
     });
 
 
+    describe('fix for mongo', function() {
+        it('should fix a object for mongo', function() {
+
+            let val={"$a":{"b.a":{c:1,d:"xxx"},x:'2017-01-01'}};
+            let walkedVals={};
+            val=$json.fixForMongo(val,function(value,path){
+                walkedVals[path]=value;
+            });
+            assert.deepEqual(val,{"_a":{"b_a":{c:1,d:"xxx"},x:'2017-01-01'}},'Invalid fix for mongo');
+        });
+
+
+        it('should fix a object for mongo with array', function() {
+
+            let val={"$a":{"b.a":{c:1,d:"xxx"},$x:[{"$z.y":35},{"$z.y":45}]}};
+            let walkedVals={};
+            val=$json.fixForMongo(val,function(value,path){
+                walkedVals[path]=value;
+            });
+            assert.deepEqual(val,{"_a":{"b_a":{c:1,d:"xxx"},_x:[{"_z_y":35},{"_z_y":45}]}},'Invalid fix for mongo');
+        });
+
+        it('should fix a object for mongo with array 2', function() {
+
+            let val=[{"$a":{"b.a":{c:1,d:"xxx"}}},{$x:[{"$z.y":35},{"$z.y":45}]}];
+            let walkedVals={};
+            val=$json.fixForMongo(val,function(value,path){
+                walkedVals[path]=value;
+            });
+            assert.deepEqual(val,[{"_a":{"b_a":{c:1,d:"xxx"}}},{_x:[{"_z_y":35},{"_z_y":45}]}],'Invalid fix for mongo');
+        });
+
+    });
+
 
 });

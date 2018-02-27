@@ -1,6 +1,6 @@
 {
   "name": "json-magic",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Utilities for manipulating JSON objects.",
   "homepage": "https://github.com/filepounder/json-magic",
   "repository": {
