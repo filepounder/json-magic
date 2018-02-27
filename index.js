@@ -1,3 +1,1 @@
-module.exports={
-    Magic:require('./lib/Magic')
-};
+module.exports=require('./lib/Magic');
