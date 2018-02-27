@@ -351,4 +351,28 @@ describe('JSON Magic', function() {
 
     });
 
+    describe('to iso string', function() {
+        it('should convert an object to isostring', function() {
+
+            let val={a:{b:{c:1,d:new Date("2017-01-01T23:45:45Z")},x:'2017-01-01'}};
+            let walkedVals={};
+            val=$json.convertDateTOISOString(val,function(value,path){
+                walkedVals[path]=value;
+            });
+            assert.deepEqual(val,{a:{b:{c:1,d:"2017-01-01T23:45:45.000Z"},x:'2017-01-01'}},'Invalid walk');
+        });
+
+        it('should convert an array to isostring ', function() {
+
+            let val=[{a:{b:{c:1,d:new Date("2017-01-01T23:45:45Z")},x:'2017-01-01'}},{a:{b:{c:1,d:new Date("2017-01-01T23:45:45Z")},x:'2017-01-01'}}];
+            let walkedVals={};
+            val=$json.convertDateTOISOString(val,function(value,path){
+                walkedVals[path]=value;
+            });
+            assert.deepEqual(val,[{a:{b:{c:1,d:"2017-01-01T23:45:45.000Z"},x:'2017-01-01'}},{a:{b:{c:1,d:"2017-01-01T23:45:45.000Z"},x:'2017-01-01'}}],'Invalid walk');
+        });
+    });
+
+
+
 });
