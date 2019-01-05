@@ -1,7 +1,8 @@
 const assert = require('assert');
 const $json=require('../index.js');
 const $stream=require('stream');
-
+const _s=require('underscore.string');
+const $check=require('check-types');
 
 describe('JSON Magic', function() {
     describe('parse path', function() {
@@ -294,6 +295,28 @@ describe('JSON Magic', function() {
                 else if (key==="x")return "x2";
             });
             assert.deepEqual(val,{a:{b:[{r:1,d:2},{r:4,d:5}],x2:'abc'}},'Invalid key rename');
+        });
+
+
+        it('should rename a key for mongo', function() {
+            let val={_id:1,"val1":"x","testVal":{$in:["A","C"]}};
+
+            val=$json.renameKey(val,(key, path) => {
+                if (key==="_id"){
+                    try{
+                        $json.set(val,path, {$objectId:$json.get(val,path)});
+                    }catch(exp){
+
+                    }
+                    return key;
+                }else if (!_s.startsWith(key, '$')&&!$check.integer(key)) {
+                    return 'data.' + key;
+                }  else {
+                    return key;
+                }
+
+            });
+            assert.deepEqual(val,{_id:{$objectId:1},"data.val1":"x","data.testVal":{$in:["A","C"]}},'Invalid key rename');
         });
 
         it('should rename a string ', function() {
