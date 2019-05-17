@@ -1,6 +1,6 @@
 {
   "name": "json-magic",
-  "version": "0.0.6",
+  "version": "0.0.8",
   "description": "Utilities for manipulating JSON objects.",
   "homepage": "https://github.com/filepounder/json-magic",
   "repository": {
@@ -12,12 +12,9 @@
     "email": "martin@filepounder.com"
   },
   "dependencies": {
-    "async": "2.6.0",
-    "check-types": "7.3.0",
-    "deepcopy": "0.6.3",
-    "deepmerge": "2.0.1",
+    "check-types": "8.0.2",
     "json-pointer": "0.6.0",
-    "underscore.string": "3.3.4"
+    "underscore.string": "3.3.5"
   },
   "engines": {
     "node": ">=6.0.0"
