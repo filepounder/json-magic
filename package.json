@@ -1,6 +1,6 @@
 {
   "name": "json-magic",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Utilities for manipulating JSON objects.",
   "homepage": "https://github.com/filepounder/json-magic",
   "repository": {
@@ -20,6 +20,6 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "mocha": "5.0.1"
+    "mocha": "6.1.4"
   }
 }
