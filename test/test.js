@@ -107,6 +107,10 @@ describe('JSON Magic', function() {
             assert.deepEqual($json.get({a:{b:{c:1}}},'/a/b'),{c:1},'Invalid get');
         });
 
+        it('should get a value 4', function() {
+            assert.deepEqual($json.get([{a:{b:{c:1}}}],'0/a/b'),{c:1},'Invalid get');
+        });
+
         it('should error on get a value on string', function() {
             assert.throws(function(){
                 $json.get('xxx','/')
@@ -212,6 +216,10 @@ describe('JSON Magic', function() {
         it('should get a pathDict with dot 2', function() {
             let val={a:{b:{c:1,d:2},x:'abc'}};
             assert.deepEqual($json.pathDict(val,'dot'),{'a.b.c':1,'a.b.d':2,'a.x':'abc'},'Invalid paths');
+        });
+        it('should get a pathDict with dot', function() {
+            let val=[{a:{b:{c:1,d:2}}}];
+            assert.deepEqual($json.pathDict(val,'dot'),{'0.a.b.c':1,'0.a.b.d':2},'Invalid paths');
         });
     });
 
@@ -447,5 +455,31 @@ describe('JSON Magic', function() {
 
     });
 
+    describe('set property', function() {
 
+        it('should set on null', function() {
+            assert.deepEqual($json.setProperty(null,"val","value"),null,'Invalid set property');
+        });
+
+        it('should set on string', function() {
+            assert.deepEqual($json.setProperty("xxx","val","value"),"xxx",'Invalid set property');
+        });
+
+        it('should set on object', function() {
+            assert.deepEqual($json.setProperty({a:1},"val","value"),{a:1,val:"value"},'Invalid set property');
+        });
+
+        it('should set on object without no override', function() {
+            assert.deepEqual($json.setProperty({a:1,val:2},"val","value"),{a:1,val:2},'Invalid set property');
+        });
+
+        it('should set on object with override', function() {
+            assert.deepEqual($json.setProperty({a:1,val:2},"val","value",true),{a:1,val:"value"},'Invalid set property');
+        });
+
+        it('should set on object complex', function() {
+            assert.deepEqual($json.setProperty({a:1,b:{c:2},d:[{e:1},{e:2}]},"val","value"),{a:1,val:"value",b:{val:"value",c:2},d:[{e:1,val:"value"},{e:2,val:"value"}]},'Invalid set property');
+        });
+
+    });
 });
