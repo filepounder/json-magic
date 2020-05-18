@@ -160,7 +160,39 @@ describe('JSON Magic', function() {
             assert.deepEqual(val,['Val1'],'Invalid set');
         });
 
-
+        it('should set an array value ', function() {
+            let val= {
+                a:{
+                    b:[
+                        {c:[
+                                {d:"one",e:1}
+                            ]},
+                        {c:[
+                                {d:"two",e:2}
+                            ]},
+                        {c:[
+                                {d:"three",e:3}
+                            ]}
+                    ]
+                }
+            };
+            $json.set(val,["a","b","1","c"],[{d:"twofix",e:2.1}])
+            assert.deepEqual(val,{
+                a:{
+                    b:[
+                        {c:[
+                                {d:"one",e:1}
+                            ]},
+                        {c:[
+                                {d:"twofix",e:2.1}
+                            ]},
+                        {c:[
+                                {d:"three",e:3}
+                            ]}
+                    ]
+                }
+            },'Invalid set');
+        });
 
         it('should set a value 4', function() {
             let val={a:{b:{c:null}}};
@@ -254,6 +286,20 @@ describe('JSON Magic', function() {
             assert.deepEqual(walkedVals,{'/a/b/c':1,'/a/b/d':2,'/a/x':'abc'},'Invalid walk');
         });
 
+        it('should walk an array', function() {
+            let val={a:{b:{c:1,d:2},x:[{length:10},{a:1}]}};
+            let walkedVals={};
+            $json.walk(val,function(value,path){
+                walkedVals[path]=value;
+            });
+            assert.deepEqual(walkedVals,{
+                "/a/b/c": 1,
+                "/a/b/d": 2,
+                "/a/x/0/length": 10,
+                "/a/x/1/a": 1
+            },'Invalid walk');
+        });
+
 
         it('should walk dot', function() {
             let val={a:{b:{c:1,d:2},x:'abc'}};
@@ -272,6 +318,9 @@ describe('JSON Magic', function() {
                 assert.equal(value,"abc","invalid value")
             });
         });
+
+
+
     });
 
 
